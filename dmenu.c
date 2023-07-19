@@ -28,7 +28,7 @@
 #define NUMBERSBUFSIZE        (NUMBERSMAXDIGITS * 2) + 1
 
 /* enums */
-enum { SchemeNorm, SchemeSel, SchemeHp, SchemeOut, SchemeMid, SchemeNormHighlight, SchemeSelHighlight, SchemeCaret, SchemeLast }; /* color schemes */
+enum { SchemeNorm, SchemeSel, SchemeHp, SchemeHpSel, SchemeHpMid, SchemeOut, SchemeMid, SchemeNormHighlight, SchemeSelHighlight, SchemeCaret, SchemeLast }; /* color schemes */
 
 struct item {
 	char *text;
@@ -224,7 +224,11 @@ drawhighlights(struct item *item, int x, int y, int maxw)
 static int
 drawitem(struct item *item, int x, int y, int w)
 {
-	if (item->hp)
+	if (item->hp && item == sel)
+		drw_setscheme(drw, scheme[SchemeHpSel]);
+	else if (item->hp && (item->left == sel || item->right == sel))
+		drw_setscheme(drw, scheme[SchemeHpMid]);
+	else if (item->hp) 
 		drw_setscheme(drw, scheme[SchemeHp]);
 	else if (item == sel)
 		drw_setscheme(drw, scheme[SchemeSel]);
