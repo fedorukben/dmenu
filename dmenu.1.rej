@@ -5,7 +5,7 @@
  .SH SYNOPSIS
  .B dmenu
 -.RB [ \-bfiv ]
-+.RB [ \-bfinv ]
++.RB [ \-bfivP ]
  .RB [ \-l
  .IR lines ]
  .RB [ \-m
