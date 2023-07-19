@@ -1,20 +1,20 @@
 --- dmenu.c
 +++ dmenu.c
-@@ -184,13 +203,15 @@ drawmenu(void)
- 		}
- 		x += w;
- 		for (item = curr; item != next; item = item->right)
--			x = drawitem(item, x, 0, MIN(TEXTW(item->text), mw - x - TEXTW(">")));
-+			x = drawitem(item, x, 0, MIN(TEXTW(item->text), mw - x - TEXTW(">") - TEXTW(numbers)));
- 		if (next) {
- 			w = TEXTW(">");
- 			drw_setscheme(drw, scheme[SchemeNorm]);
--			drw_text(drw, mw - w, 0, w, bh, lrpad / 2, ">", 0);
-+			drw_text(drw, mw - w - TEXTW(numbers), 0, w, bh, lrpad / 2, ">", 0);
- 		}
- 	}
-+	drw_setscheme(drw, scheme[SchemeNorm]);
-+	drw_text(drw, mw - TEXTW(numbers), 0, TEXTW(numbers), bh, lrpad / 2, numbers, 0);
- 	drw_map(drw, win, 0, 0, mw, mh);
- }
+@@ -26,7 +26,7 @@
+ #define TEXTW(X)              (drw_fontset_getwidth(drw, (X)) + lrpad)
  
+ /* enums */
+-enum { SchemeNorm, SchemeSel, SchemeOut, SchemeLast }; /* color schemes */
++enum { SchemeNorm, SchemeSel, SchemeOut, SchemeMid, SchemeLast }; /* color schemes */
+ 
+ struct item {
+ 	char *text;
+@@ -118,6 +118,8 @@ drawitem(struct item *item, int x, int y, int w)
+ {
+ 	if (item == sel)
+ 		drw_setscheme(drw, scheme[SchemeSel]);
++	else if (item->left == sel || item->right == sel)
++		drw_setscheme(drw, scheme[SchemeMid]);
+ 	else if (item->out)
+ 		drw_setscheme(drw, scheme[SchemeOut]);
+ 	else
