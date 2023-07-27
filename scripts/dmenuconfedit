@@ -11,4 +11,19 @@ declare -a options=(
 "qtile - $HOME/.config/qtile/config.py"
 "sxhkd - $HOME/.config/sxhkd/sxhkdrc"
 "vim - $HOME/.vimrc"
+"xresources - $HOME/.Xresources"
 "quit"
+)
+
+choice=$(printf '%s\n' "${options[@]}" | dmenu -l 20 -p 'Edit config:')
+
+if [[ "$choice" == "quit" ]]; then
+	echo "Program terminated." && exit 1
+
+elif [ "$choice" ]; then
+	cfg=$(printf '%s\n' "${choice}" | awk '{print $NF}')
+	$DMEDITOR "$cfg"
+
+else
+	echo "Program terminated." && exit 1
+fi
