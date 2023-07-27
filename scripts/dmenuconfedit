@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+
+DMEDITOR="vim"
+
+declare -a options=(
+"bash - $HOME/.bashrc"
+"bspwm - $HOME/.config/bspwm/bspwmrc"
+"dmenu - $HOME/.config/dmenu/config.h"
+"picom - $HOME/.config/picom/"
+"polybar - $HOME/.config/polybar/config"
+"qtile - $HOME/.config/qtile/config.py"
+"sxhkd - $HOME/.config/sxhkd/sxhkdrc"
+"vim - $HOME/.vimrc"
+"quit"
